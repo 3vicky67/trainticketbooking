@@ -1,0 +1,70 @@
+managed implementation in class zbp_cit_trn_i_hdr unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZCIT_TRN_I_HDR alias TrainBooking
+persistent table zcit_trn_hdr
+draft table zcit_trn_hdr_d
+lock master total etag LastChangedAt
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create;
+  update;
+  delete;
+  association _Passengers { create; with draft; }
+  field ( readonly ) TotalAmount;
+  field ( readonly, numbering : managed ) BookingUuid;
+  field ( readonly ) CreatedAt, CreatedBy, LastChangedAt, LastChangedBy;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zcit_trn_hdr
+  {
+    BookingUuid   = booking_uuid;
+    BookingId     = booking_id;
+    TrainNumber   = train_number;
+    TravelDate    = travel_date;
+    TotalAmount   = total_amount;
+    CurrencyCode  = currency_code;
+    BookingStatus = booking_status;
+    FromLocation  = from_location;
+    ToLocation    = to_location;
+    CreatedBy     = created_by;
+    CreatedAt     = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for ZCIT_TRN_I_ITM alias Passenger
+implementation in class zbp_cit_trn_i_itm unique
+persistent table zcit_trn_itm
+draft table zcit_trn_itm_d
+lock dependent by _Booking
+authorization dependent by _Booking
+{
+  update;
+  delete;
+  field ( readonly ) BookingUuid;
+  field ( readonly, numbering : managed ) PassengerUuid;
+  association _Booking { with draft; }
+
+  determination calculateTotal on modify { field PassengerAmount; create; delete; }
+
+  mapping for zcit_trn_itm
+  {
+    PassengerUuid   = passenger_uuid;
+    BookingUuid     = booking_uuid;
+    PassengerName   = passenger_name;
+    Age             = age;
+    SeatNumber      = seat_number;
+    TravelClass     = travel_class;
+    PassengerAmount = passenger_amount;
+    CurrencyCode    = currency_code;
+  }
+}

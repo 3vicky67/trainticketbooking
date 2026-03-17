@@ -1,0 +1,26 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZCIT_TRN_C_HDR alias TrainBooking
+{
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _Passengers { create; with draft; }
+}
+
+define behavior for ZCIT_TRN_C_ITM alias Passenger
+{
+  use update;
+  use delete;
+
+  use association _Booking { with draft; }
+}

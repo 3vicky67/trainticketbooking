@@ -1,0 +1,72 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName:       'Train Booking',
+  typeNamePlural: 'Train Bookings',
+  typeImageUrl:      'sap-icon:%%train',
+  title:          { type: #STANDARD, value: 'BookingId' },
+  description:    { type: #STANDARD, value: 'TrainNumber' }
+}
+
+annotate entity ZCIT_TRN_C_HDR with
+{
+  /* ── FACETS (Object Page Layout) ── */
+  @UI.facet: [
+    {
+      id:             'GeneralInfo',
+      purpose:        #STANDARD,
+      type:           #IDENTIFICATION_REFERENCE,
+      label:          'General Information',
+      position:       10
+    },
+    {
+      id:             'PassengerFacet',
+      purpose:        #STANDARD,
+      type:           #LINEITEM_REFERENCE,
+      label:          'Passengers',
+      position:       20,
+      targetElement:  '_Passengers'
+    }
+  ]
+  BookingUuid;
+
+  /* ── FIELD ANNOTATIONS ── */
+
+  @UI.lineItem:       [{ position: 10, label: 'Booking ID' }]
+  @UI.identification: [{ position: 10, label: 'Booking ID' }]
+  BookingId;
+
+  @UI.lineItem:       [{ position: 20, label: 'Train Number' }]
+  @UI.identification: [{ position: 20, label: 'Train Number' }]
+  TrainNumber;
+
+  @UI.lineItem:       [{ position: 25, label: 'From Location' }]
+  @UI.identification: [{ position: 25, label: 'From Location' }]
+  FromLocation;
+
+  @UI.lineItem:       [{ position: 26, label: 'To Location' }]
+  @UI.identification: [{ position: 26, label: 'To Location' }]
+  ToLocation;
+
+  @UI.lineItem:       [{ position: 30, label: 'Travel Date' }]
+  @UI.identification: [{ position: 30, label: 'Travel Date' }]
+  TravelDate;
+
+  @UI.lineItem:       [{ position: 40, label: 'Total Amount' }]
+  @UI.identification: [{ position: 40, label: 'Total Amount' }]
+  TotalAmount;
+
+  @UI.lineItem:       [{ position: 50, label: 'Currency' }]
+  @UI.identification: [{ position: 50, label: 'Currency Code' }]
+  CurrencyCode;
+
+  @UI.selectionField: [{ position: 10 }]
+  @UI.lineItem:       [{ position: 60,
+                         label: 'Status',
+                         criticality: 'BookingStatusCriticality',
+                         criticalityRepresentation: #WITH_ICON }]
+  @UI.identification: [{ position: 60, label: 'Booking Status' }]
+  BookingStatus;
+
+  @UI.hidden: true
+  BookingStatusCriticality;
+}

@@ -1,0 +1,40 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName: 'Passenger',
+  typeNamePlural: 'Passengers',
+  title: { type: #STANDARD, value: 'PassengerName' },
+  description: { type: #STANDARD, value: 'SeatNumber' }
+}
+ 
+annotate entity ZCIT_TRN_C_ITM with
+{
+  /* ── FACET TO MAKE THE OBJECT PAGE VISIBLE ── */
+  @UI.facet: [{
+    id: 'PassengerDetails',
+    purpose: #STANDARD,
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'Passenger Information',
+    position: 10
+  }]
+
+  /* ── LINE ITEM COLUMNS & OBJECT PAGE FIELDS ── */
+  @UI.lineItem: [{ position: 10, label: 'Passenger Name' }]
+  @UI.identification: [{ position: 10, label: 'Passenger Name' }]
+  PassengerName;
+ 
+  @UI.lineItem: [{ position: 20, label: 'Age' }]
+  @UI.identification: [{ position: 20, label: 'Age' }]
+  Age;
+ 
+  @UI.lineItem: [{ position: 30, label: 'Seat Number' }]
+  @UI.identification: [{ position: 30, label: 'Seat Number' }]
+  SeatNumber;
+ 
+  @UI.lineItem: [{ position: 40, label: 'Travel Class' }]
+  @UI.identification: [{ position: 40, label: 'Travel Class' }]
+  TravelClass;
+  
+  @UI.lineItem: [{ position: 50, label: 'Passenger Amount' }]
+  @UI.identification: [{ position: 50, label: 'Passenger Amount' }]
+  PassengerAmount;
+}

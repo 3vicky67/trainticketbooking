@@ -1,0 +1,6 @@
+@EndUserText.label: 'Service Definition for Train Ticket Booking'
+define service ZCIT_TRN_SD {
+  expose ZCIT_TRN_C_HDR     as TrainBooking;
+  expose ZCIT_TRN_C_ITM     as Passenger;
+  expose ZCIT_TRN_VH_STATUS as BookingStatus;
+}
